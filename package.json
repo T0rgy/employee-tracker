@@ -1,0 +1,26 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "An Employee Tracker database that manages department's roles and employees.",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/T0rgy/employee-tracker.git"
+  },
+  "author": "Jacob Torgeson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/T0rgy/employee-tracker/issues"
+  },
+  "homepage": "https://github.com/T0rgy/employee-tracker#readme",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "inquirer": "^8.2.4",
+    "jest": "^28.1.0",
+    "mysql2": "^2.3.3"
+  }
+}
