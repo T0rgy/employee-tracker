@@ -10,7 +10,7 @@ require('dotenv').config()
 const connection = require('./config/connection');
 
 // function imports
-const add = require('./lib/add');
+const add = require('./lib/addUpdate');
 const deletE = require('./lib/delete');
 const showAll = require('./lib/showAll');
 const view = require('./lib/view');
@@ -52,10 +52,10 @@ const promptUser = () => {
             addRole();
         }
         if (choices === 'Add an employee') {
-        addEmployee();
+            addEmployee();
         }
         if (choices === 'Update and employees manager') {
-            updateManager();
+            addManager();
         }
         if (choices === 'View employees by department') {
             employeeDept();
