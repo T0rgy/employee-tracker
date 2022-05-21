@@ -1,8 +1,8 @@
   # Employee Tracker
 
   ## Description
-  Need a simple and attractive way to keep notes? This project allows you to quickly add a new note with a title and text to keep track of your tasks. It also allows deleting a note when it's no longer needed.
-  ![Screenshot]()
+  An easy straight forward command line application storing Employee and Department data in a mySQL database.
+  ![Screenshot](terminal_screenshot.png)
 
   ## Table of Contents
   [Description](#description)    
@@ -17,8 +17,7 @@
   Make sure you have mysql download on to your computer and then download the source code and make sure to 'npm init' and 'npm install mysql2 inquirer console.table'. You can also 'npm dotenv' and make a .env to hide mysql connection credentials. 
 
   ## Usage
-  Use this project to create and delete notes.  
-  Heroku Deployment: <https://note-takert0rgy.herokuapp.com/>
+  Run 'npm start' or 'node server.js' in command line.
 
   ## License 
   There are no licenses associated with this project.

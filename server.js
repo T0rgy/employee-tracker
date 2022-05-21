@@ -13,21 +13,17 @@ connection.connect(err => {
     afterConnection();
 })
 
-// function imports
-// const { addDept, addRole, addEmployee, updateEmployee, updateManager} = require('./lib/addUpdate');
-// const { deleteDept, deleteRole, deleteEmployee } = require('./lib/delete');
-// const { showDept, showEmployees, showRoles } = require('./lib/showAll');
-// const { viewBudget, employeeDept} = require('./lib/view');
 
+// Once mySQL connection established show Employee Manager console.log and start user prompt menu
 const afterConnection = () => {
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     console.log("*________EMPLOYEE MANAGER_________*")
     console.log("*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*")
-    promptUser();
+    userMenu();
 };
 
 // inquirer prompt starts here
-const promptUser = () => {
+const userMenu = () => {
     inquirer.prompt ([
         {
             type: 'list',
@@ -107,7 +103,7 @@ const showDept = () => {
     connection.query(sqlLang, (err, rows) => {
         if (err) throw err;
         console.table(rows);
-        promptUser();
+        userMenu();
     });
 };
 
@@ -121,7 +117,7 @@ const showRoles = () => {
     connection.query(sqlLang, (err, rows) => {
         if (err) throw err;
         console.table(rows);
-        promptUser();
+        userMenu();
     });
 };
 
@@ -145,10 +141,11 @@ const showEmployees = () => {
     connection.query(sqlLang, (err, rows) => {
         if (err) throw err;
         console.table(rows)
-        promptUser();
+        userMenu();
     });
 };
 
+// show table of employees ordered by department 
 const employeeDept = () => {
     console.log('Showing employee by department...\n');
     const sqlLang = `
@@ -164,10 +161,11 @@ const employeeDept = () => {
     connection.query(sqlLang, (err, rows) => {
         if (err) throw err;
         console.table(rows);
-        promptUser();
+        userMenu();
     });
 };
 
+// show table of departments and their budgets
 const viewBudget = () => {
     console.log('Showing Budget by department...\n');
 
@@ -183,7 +181,7 @@ const viewBudget = () => {
         if (err) throw err;
         console.table(rows);
 
-        promptUser();
+        userMenu();
     });
 };
 
@@ -217,6 +215,8 @@ const addDept = () => {
 
 };
 
+
+// add a department role
 const addRole = () => {
     inquirer.prompt([
         {
@@ -281,6 +281,8 @@ const addRole = () => {
     });
 };
 
+
+// add and employee and asign a role and salary
 const addEmployee = () => {
     inquirer.prompt([
         {
@@ -350,6 +352,7 @@ const addEmployee = () => {
     });
 };
 
+// updates an employee's manager
 const updateEmployee = () => {
 
     const employeeIdTable = `SELECT * FROM employee`;
@@ -372,26 +375,27 @@ const updateEmployee = () => {
             const params = [];
             params.push(employee);
 
-            const managerIdTable = `SELECT * FROM employee`;
+            const roleIdTable = `SELECT * FROM employee`;
 
-            connection.query(managerIdTable, (err, data) => {
+            connection.query(roleIdTable, (err, data) => {
                 if (err) throw err;
-                const managers = data.map(({ id, first_name, last_name }) => ({ name: first_name + " "+ last_name, value: id }));
+
+                const roles = data.map(({ id, title }) => ({ name: title, value: id }))
                 
                 inquirer.prompt([
                 {
                     type: 'list',
-                    name: 'manager',
-                    message: "Who is the employee's manager?",
-                    choices: managers
+                    name: 'role',
+                    message: "What is the empoyee's new role?",
+                    choices: roles
                 }
                 ])
-                    .then(managerChoice => {
-                    const manager = managerChoice.manager;
-                    params.push(manager);
+                    .then(roleChoice => {
+                    const role = roleChoice.role;
+                    params.push(role);
 
                     let employee = params[0];
-                    params[0] = manager;
+                    params[0] = role;
                     params[1] = employee;
 
                     const sql = `UPDATE employee SET role_id = ? WHERE id = ?`;
@@ -407,6 +411,8 @@ const updateEmployee = () => {
         });
     });
 };
+
+
 
 const updateManager = () => {
     const employeeIdTable = `SELECT * FROM employee`;
