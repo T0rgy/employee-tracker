@@ -8,9 +8,6 @@ const connection =  mysql.createConnection({
     database: 'employee_db'
 });
 
-connection.connect(err => {
-    if (err) throw err;
-    afterConnection();
-})
+
 
 module.exports =  connection;
