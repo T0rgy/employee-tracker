@@ -1,7 +1,8 @@
 // required packages
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
-const consoleTable = require('console.table');
+const cTable = require('console.table');
+const path = require('path');
 
 // .env file to hide password
 require('dotenv').config()
@@ -10,18 +11,12 @@ require('dotenv').config()
 const connection = require('./config/connection');
 
 // function imports
-const add = require('./lib/addUpdate');
-const deletE = require('./lib/delete');
-const showAll = require('./lib/showAll');
-const view = require('./lib/view');
+const { addDept, addRole, addEmployee, updateEmployee, updateManager} = require('./lib/addUpdate');
+const { deleteDept, deleteRole, deleteEmployee } = require('./lib/delete');
+const { showDept, showEmployees, showRoles } = require('./lib/showAll');
+const { viewBudget, employeeDept} = require('./lib/view');
 
 
-afterConnection = () => {
-    console.log("***********************************")
-    console.log("*                                 *")
-    console.log("*________EMPLOYEE MANAGER_________*")
-    promptUser();
-};
 
 // inquirer prompt starts here
 const promptUser = () => {
@@ -30,19 +25,33 @@ const promptUser = () => {
             type: 'list',
             name: 'choices',
             message: 'How would you like to proceed?',
-            choices: [' View departments', 'View roles', 'View employees', 'Add a department', 'Add a role', 'Add an employee', 'Update and employee role', 'Update an employees manager', 'View employees by department', 'View department budgets', 'Delete a department', 'Delete a role', 'Delete an employee',  'exit']
+            choices: [
+                'View departments', 
+                'View roles', 
+                'View employees', 
+                'Add a department', 
+                'Add a role', 
+                'Add an employee', 
+                'Update and employee role', 
+                'Update an employees manager', 
+                'View employees by department', 
+                'View department budgets', 
+                'Delete a department', 
+                'Delete a role', 
+                'Delete an employee',  
+                'Exit']
         }
     ])
     .then((answers) => {
         const { choices } = answers;
 
         if (choices === 'View departments') {
-            showDepartments();
+            showDept();
         }
-        if (choices === 'View all roles') {
+        if (choices === 'View roles') {
             showRoles();
         }
-        if (choices === 'View all employees') {
+        if (choices === 'View employees') {
             showEmployees();
         }
         if (choices === 'Add a department') {
@@ -54,8 +63,11 @@ const promptUser = () => {
         if (choices === 'Add an employee') {
             addEmployee();
         }
-        if (choices === 'Update and employees manager') {
-            addManager();
+        if (choices === 'Update and employee role') {
+            updateEmployee();
+        }
+        if (choices === 'Update an employees manager') {
+            updateManager();
         }
         if (choices === 'View employees by department') {
             employeeDept();
@@ -77,4 +89,13 @@ const promptUser = () => {
         };
     });
 };
+
+afterConnection = () => {
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    console.log("*________EMPLOYEE MANAGER_________*")
+    console.log("*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*")
+    promptUser();
+};
+
+module.exports = { promptUser };
 
