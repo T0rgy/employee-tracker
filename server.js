@@ -375,7 +375,7 @@ const updateEmployee = () => {
             const params = [];
             params.push(employee);
 
-            const roleIdTable = `SELECT * FROM employee`;
+            const roleIdTable = `SELECT * FROM role`;
 
             connection.query(roleIdTable, (err, data) => {
                 if (err) throw err;
