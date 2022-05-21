@@ -18,6 +18,7 @@
 
   ## Usage
   Run 'npm start' or 'node server.js' in command line.
+  [Walkthrough](https://drive.google.com/file/d/1LnvD_Nfd_raD4j20siAWBTfaERUer1mV/view)
 
   ## License 
   There are no licenses associated with this project.
